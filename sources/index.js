@@ -1,16 +1,20 @@
+function displayTemperature(response) {
+  let temperatureElement = document.querySelector("#current-temperature");
+  let temperature = Math.round(response.data.temperature.current);
+  let cityElement = document.querySelector("#current-city");
+  cityElement.innerHTML = response.data.city;
+  temperatureElement.innerHTML = temperature;
+}
+
 function search(event) {
   event.preventDefault();
   let searchInputElement = document.querySelector("#search-input");
-  let cityElement = document.querySelector("#current-city");
-  let city = searchInputElement.value.trim();
-  cityElement.innerHTML = city;
-  fetchTemperature(city);
-}
-function fetchTemperature(city) {
-  let apiKey = "e430a0b40t5635ffab9bc012406aa3ao";
-  let apiURL = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+  let city = searchInputElement.value;
 
-  axios.get(apiURL).then(currentTemperature);
+  let apiKey = "b2a5adcct04b33178913oc335f405433";
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${apiKey}&units=metric`;
+
+  axios.get(apiUrl).then(displayTemperature);
 }
 
 function formatDate(date) {
@@ -47,11 +51,3 @@ let currentDateELement = document.querySelector("#current-date");
 let currentDate = new Date();
 
 currentDateELement.innerHTML = formatDate(currentDate);
-
-function currentTemperature(response) {
-  let realTimeTemperature = Math.round(response.data.temperature.current);
-  let currentTemperatureValue = document.querySelector(
-    "#current-temperature-value"
-  );
-  currentTemperatureValue.innerHTML = realTimeTemperature;
-}
